@@ -1,0 +1,18 @@
+name: Build typst
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_release_thesis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+          lfs: true
+
+      - uses: typst-community/setup-typst@v3
+      - run: typst compile thesis.typ thesis.pdf

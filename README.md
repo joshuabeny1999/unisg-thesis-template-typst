@@ -1,5 +1,5 @@
 # thesis-template-typst
-This repository provides a unofficial Typst template for writing your Bachelor's or Master's thesis at the HSG (University of St. Gallen). It includes a thesis template. For more information about writing a thesis at the CIT School, please visit the [official CIT website](https://www.cit.tum.de/en/cit/studies/students/thesis-completing-your-studies/informatics/).
+This repository provides a unofficial Typst template for writing your Bachelor's or Master's thesis at the HSG (University of St. Gallen). It includes a thesis template. For more information about writing a thesis at the HSG, please visit the [HSG Student Web (Login required)](https://universitaetstgallen.sharepoint.com/sites/PruefungenDE/SitePages/en/Master-Arbeiten.aspx?web=1).
 
 **Note:** This is only a template. You have to adapt the template to your thesis and discuss the structure of your thesis with your supervisor!
 

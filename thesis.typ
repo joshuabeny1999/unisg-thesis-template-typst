@@ -14,7 +14,7 @@
   submissionDate: submissionDate,
   abstract: include "/content/abstract.typ",
   acknowledgement: include "/content/acknowledgement.typ",
-  transparency_ai_tools: include "/content/transparency_ai_tools.typ",
+  directory_writing_aids: include "/content/directory_writing_aids.typ",
   appendix: include "/content/appendix.typ",
 )
 

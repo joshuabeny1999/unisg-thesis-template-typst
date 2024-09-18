@@ -1,6 +1,6 @@
 #import "/layout/titlepage.typ": *
 #import "/layout/disclaimer.typ": *
-#import "/layout/transparency_ai_tools.typ": transparency_ai_tools as transparency_ai_tools_layout
+#import "/layout/directory_writing_aids.typ": directory_writing_aids as directory_writing_aids_layout
 #import "/layout/abstract.typ": abstract as abstract_layout
 #import "/utils/print_page_break.typ": *
 
@@ -41,7 +41,7 @@
   abstract: "",
   language: "en",
   acknowledgement: "",
-  transparency_ai_tools: "",
+  directory_writing_aids: "",
   appendix: "",
   is_print: false,
   body,
@@ -213,6 +213,6 @@
 
   print_page_break(print: is_print)
 
-  transparency_ai_tools_layout(language: language, transparency_ai_tools)
+  directory_writing_aids_layout(language: language, directory_writing_aids)
 
 }

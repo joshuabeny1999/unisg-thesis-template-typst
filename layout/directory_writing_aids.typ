@@ -1,4 +1,4 @@
-#let transparency_ai_tools(language: "en", body) = {
+#let directory_writing_aids(language: "en", body) = {
   set page(
     margin: (left: 30mm, right: 30mm, top: 40mm, bottom: 40mm),
     numbering: none,
@@ -17,7 +17,7 @@
   set par(leading: 1em)
 
   // --- AI Usage ---
-  let title = (en: "Transparency in the use of AI tools", de: "Transparenz bei der Verwendung von KI-Tools")
+  let title = (en: "Directory of writing aids", de: "Verzeichnis der Schreibhilfsmittel")
   heading(title.at(language), numbering: none)
   v(12pt)
 

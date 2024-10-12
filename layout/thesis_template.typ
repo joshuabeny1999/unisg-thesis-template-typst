@@ -16,16 +16,18 @@
   locate(loc => {
     // Find if there is a level 1 heading on the current page
     let nextMainHeading = query(selector(heading).after(loc), loc).find(headIt => {
-     headIt.location().page() == loc.page() and headIt.level == 1
+      headIt.location().page() == loc.page() and headIt.level == 1
     })
     if (nextMainHeading != none) {
       return buildHeader(nextMainHeading.body)
     }
     // Find the last previous level 1 heading -- at this point surely there's one
-    let lastMainHeading = query(selector(heading).before(loc), loc).filter(headIt => {
-      headIt.level == 1
-    }).last()
-    
+    let lastMainHeading = query(selector(heading).before(loc), loc)
+      .filter(headIt => {
+          headIt.level == 1
+        })
+      .last()
+
     return buildHeader(lastMainHeading.body)
   })
 }
@@ -62,7 +64,9 @@
   print_page_break(print: is_print, to: "even")
 
 
-  abstract_layout(lang: language)[#abstract]
+  if abstract != "" {
+    abstract_layout(lang: language)[#abstract]
+  }
 
   set page(
     margin: (left: 2.5cm, right: 2.5cm, top: 2.5cm, bottom: 2.5cm),
@@ -73,29 +77,35 @@
   let body-font = "Times New Roman"
 
   set text(
-    font: body-font, 
-    size: 12pt, 
-    lang: language
+    font: body-font,
+    size: 12pt,
+    lang: language,
   )
-  
+
   show math.equation: set text(weight: 400)
 
-  set table( stroke:(x, y) => (
-    y: if y == 1 { 2pt + gray } else { 1pt + gray },
-    x: 1pt + gray
-  ),
-  
-   fill: (x, y) =>
-    if y == 0 { rgb(55, 126, 57) }
+  set table(
+    stroke: (x, y) => (
+      y: if y == 1 {
+        2pt + gray
+      } else {
+        1pt + gray
+      },
+      x: 1pt + gray,
+    ),
+
+    fill: (x, y) => if y == 0 {
+      rgb(55, 126, 57)
+    },
   )
   show table.cell: it => {
-  if it.y == 0 {
-    set text(white)
-    strong(it)
-  } else {
-    it
+    if it.y == 0 {
+      set text(white)
+      strong(it)
+    } else {
+      it
+    }
   }
-}
 
   // --- Headings ---
   show heading: set block(below: 0.85em, above: 1.75em)
@@ -109,7 +119,7 @@
       chapter.at(language) + " "
       numbering(
         el.numbering,
-        ..counter(heading).at(el.location())
+        ..counter(heading).at(el.location()),
       )
     } else {
       it
@@ -124,37 +134,29 @@
 
   // --- Figures ---
   show figure: set text(size: 0.85em)
-  
+
   // --- Table of Contents ---
   let tocTitle = (en: "Table of Contents", de: "Inhaltsverzeichnis")
 
-  show outline.entry.where(
-  level: 1
-  ): it => {
+  show outline.entry.where(level: 1): it => {
     strong(text(size: 12pt, it))
   }
-  show outline.entry.where(
-  level: 2
-  ): it => {
+  show outline.entry.where(level: 2): it => {
     text(size: 11pt, it)
   }
-  show outline.entry.where(
-  level: 3
-  ): it => {
+  show outline.entry.where(level: 3): it => {
     text(size: 10.5pt, it)
   }
-  show outline.entry.where(
-  level: 4
-  ): it => {
+  show outline.entry.where(level: 4): it => {
     text(size: 10pt, it)
   }
 
   outline(
     title: tocTitle.at(language),
-    indent: 2em
+    indent: 2em,
   )
-  
-  
+
+
   v(2.4fr)
   pagebreak()
 
@@ -170,7 +172,7 @@
   let figureListTitle = (en: "List of Figures", de: "Abbildungsverzeichnis")
   heading(numbering: none)[#figureListTitle.at(language)]
   outline(
-    title:"",
+    title: "",
     target: figure.where(kind: image),
   )
 
@@ -180,7 +182,7 @@
   heading(numbering: none)[#tableListTitle.at(language)]
   outline(
     title: "",
-    target: figure.where(kind: table)
+    target: figure.where(kind: table),
   )
   pagebreak()
 
@@ -191,11 +193,20 @@
   body
 
 
+   if acknowledgement != "" {
+    pagebreak()
+    let acknowledgementTitle = (en: "Acknowledgement", de: "Danksagung")
+    heading(numbering: none)[#acknowledgementTitle.at(language)]
+    acknowledgement
+  }
+  
   // Appendix.
-  pagebreak()
-  let appendixTitle = (en: "Appendix", de: "Anhang")
-  heading(numbering: none)[#appendixTitle.at(language)]
-  appendix
+  if appendix != "" {
+    pagebreak()
+    let appendixTitle = (en: "Appendix", de: "Anhang")
+    heading(numbering: none)[#appendixTitle.at(language)]
+    appendix
+  }
 
   pagebreak()
   let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")
@@ -207,7 +218,7 @@
     title: title,
     author: author,
     language: language,
-    submissionDate: submissionDate
+    submissionDate: submissionDate,
   )
 
 

@@ -38,7 +38,9 @@
   print_page_break(print: is_print, to: "even")
 
 
-  abstract_layout(lang: language)[#abstract]
+  if abstract != "" {
+    abstract_layout(lang: language)[#abstract]
+  }
 
   set page(
     margin: (left: 2.5cm, right: 2.5cm, top: 2.5cm, bottom: 2.5cm),
@@ -81,11 +83,17 @@
 
   set table(
     stroke: (x, y) => (
-      y: if y == 1 { 2pt + gray } else { 1pt + gray },
+      y: if y == 1 {
+        2pt + gray
+      } else {
+        1pt + gray
+      },
       x: 1pt + gray,
     ),
 
-    fill: (x, y) => if y == 0 { rgb(55, 126, 57) },
+    fill: (x, y) => if y == 0 {
+      rgb(55, 126, 57)
+    },
   )
   show table.cell: it => {
     if it.y == 0 {
@@ -177,16 +185,25 @@
 
 
   // Main body.
-  set par(justify: true, first-line-indent: 2em)
+  set par(justify: true)
 
   body
 
 
+  if acknowledgement != "" {
+    pagebreak()
+    let acknowledgementTitle = (en: "Acknowledgement", de: "Danksagung")
+    heading(numbering: none)[#acknowledgementTitle.at(language)]
+    acknowledgement
+  }
+
   // Appendix.
-  pagebreak()
-  let appendixTitle = (en: "Appendix", de: "Anhang")
-  heading(numbering: none)[#appendixTitle.at(language)]
-  appendix
+  if appendix != "" {
+    pagebreak()
+    let appendixTitle = (en: "Appendix", de: "Anhang")
+    heading(numbering: none)[#appendixTitle.at(language)]
+    appendix
+  }
 
   pagebreak()
   let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")

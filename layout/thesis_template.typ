@@ -33,6 +33,7 @@
     author: author,
     matriculationNumber: matriculationNumber,
     submissionDate: submissionDate,
+    language: language,
   )
 
   print_page_break(print: is_print, to: "even")

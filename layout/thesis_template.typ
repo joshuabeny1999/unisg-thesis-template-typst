@@ -4,31 +4,8 @@
 #import "/layout/abstract.typ": abstract as abstract_layout
 #import "/utils/print_page_break.typ": *
 
-#let buildHeader(headingContent) = {
-  [
-    #align(end, text(size: 11pt, weight: 400, headingContent))
-    #v(2mm)
-  ]
-}
 
 
-#let getHeader() = {
-  locate(loc => {
-    // Find if there is a level 1 heading on the current page
-    let nextMainHeading = query(selector(heading).after(loc), loc).find(headIt => {
-     headIt.location().page() == loc.page() and headIt.level == 1
-    })
-    if (nextMainHeading != none) {
-      return buildHeader(nextMainHeading.body)
-    }
-    // Find the last previous level 1 heading -- at this point surely there's one
-    let lastMainHeading = query(selector(heading).before(loc), loc).filter(headIt => {
-      headIt.level == 1
-    }).last()
-    
-    return buildHeader(lastMainHeading.body)
-  })
-}
 
 #let thesis(
   title: "",
@@ -46,7 +23,6 @@
   is_print: false,
   body,
 ) = {
-
   assert(language in ("de", "en"), message: "The language supported are only 'de' and 'en'.")
 
   titlepage(
@@ -67,35 +43,58 @@
   set page(
     margin: (left: 2.5cm, right: 2.5cm, top: 2.5cm, bottom: 2.5cm),
     numbering: none,
-    header: getHeader(),
+  )
+
+  set page(
+    header: context {
+      // Find first level-1 heading on this page (if any).
+      let h = query(heading.where(level: 1).after(here()))
+        .filter(h => h.location().page() == here().page())
+        .at(
+          0,
+          default: {
+            // Fall back to last previous heading.
+            query(heading.where(level: 1).before(here())).at(-1, default: none)
+          },
+        )
+
+      if h != none {
+        // Create number from counter value and numbering.
+
+        [
+          #align(end, text(size: 11pt, weight: 400, h.body))
+          #v(2mm)
+        ]
+      }
+    },
   )
 
   let body-font = "Times New Roman"
 
   set text(
-    font: body-font, 
-    size: 12pt, 
-    lang: language
+    font: body-font,
+    size: 12pt,
+    lang: language,
   )
-  
+
   show math.equation: set text(weight: 400)
 
-  set table( stroke:(x, y) => (
-    y: if y == 1 { 2pt + gray } else { 1pt + gray },
-    x: 1pt + gray
-  ),
-  
-   fill: (x, y) =>
-    if y == 0 { rgb(55, 126, 57) }
+  set table(
+    stroke: (x, y) => (
+      y: if y == 1 { 2pt + gray } else { 1pt + gray },
+      x: 1pt + gray,
+    ),
+
+    fill: (x, y) => if y == 0 { rgb(55, 126, 57) },
   )
   show table.cell: it => {
-  if it.y == 0 {
-    set text(white)
-    strong(it)
-  } else {
-    it
+    if it.y == 0 {
+      set text(white)
+      strong(it)
+    } else {
+      it
+    }
   }
-}
 
   // --- Headings ---
   show heading: set block(below: 0.85em, above: 1.75em)
@@ -103,13 +102,13 @@
   set heading(numbering: "1.1")
   // Reference first-level headings as "chapters"
   let chapter = (en: "Chapter", de: "Kapitel")
-  show ref: it => {
+  show ref.where(form: "normal"): it => {
     let el = it.element
     if el != none and el.func() == heading and el.level == 1 {
       chapter.at(language) + " "
       numbering(
         el.numbering,
-        ..counter(heading).at(el.location())
+        ..counter(heading).at(el.location()),
       )
     } else {
       it
@@ -124,37 +123,29 @@
 
   // --- Figures ---
   show figure: set text(size: 0.85em)
-  
+
   // --- Table of Contents ---
   let tocTitle = (en: "Table of Contents", de: "Inhaltsverzeichnis")
 
-  show outline.entry.where(
-  level: 1
-  ): it => {
+  show outline.entry.where(level: 1): it => {
     strong(text(size: 12pt, it))
   }
-  show outline.entry.where(
-  level: 2
-  ): it => {
+  show outline.entry.where(level: 2): it => {
     text(size: 11pt, it)
   }
-  show outline.entry.where(
-  level: 3
-  ): it => {
+  show outline.entry.where(level: 3): it => {
     text(size: 10.5pt, it)
   }
-  show outline.entry.where(
-  level: 4
-  ): it => {
+  show outline.entry.where(level: 4): it => {
     text(size: 10pt, it)
   }
 
   outline(
     title: tocTitle.at(language),
-    indent: 2em
+    indent: 2em,
   )
-  
-  
+
+
   v(2.4fr)
   pagebreak()
 
@@ -170,7 +161,7 @@
   let figureListTitle = (en: "List of Figures", de: "Abbildungsverzeichnis")
   heading(numbering: none)[#figureListTitle.at(language)]
   outline(
-    title:"",
+    title: "",
     target: figure.where(kind: image),
   )
 
@@ -180,7 +171,7 @@
   heading(numbering: none)[#tableListTitle.at(language)]
   outline(
     title: "",
-    target: figure.where(kind: table)
+    target: figure.where(kind: table),
   )
   pagebreak()
 
@@ -207,12 +198,11 @@
     title: title,
     author: author,
     language: language,
-    submissionDate: submissionDate
+    submissionDate: submissionDate,
   )
 
 
   print_page_break(print: is_print)
 
   directory_writing_aids_layout(language: language, directory_writing_aids)
-
 }

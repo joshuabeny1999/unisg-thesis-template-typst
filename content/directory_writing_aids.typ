@@ -1,5 +1,4 @@
 #import "/utils/todo.typ": TODO
-#import "/utils/pageref.typ": pageref
 
 #TODO[
   Update this paragraph to reflect the tools you used in your thesis. Please see Guide in #link("https://universitaetstgallen.sharepoint.com/sites/PruefungenDE/SitePages/ChatGPT.aspx")[StudentWeb] for more information. (HSG Account required)
@@ -12,11 +11,19 @@ In preparing this thesis, I utilized Grammarly for grammar and style correction 
   table(
     columns: (1fr, 1fr, 1fr),
     "Aid", "Usage / Application", "Affected Areas",
-    "ChatGPT 4.0", [- Brainstorming Structure
-    - Mindmaps
-    - Rewriting Text], [All chapters \ See Promt Dictionary \ \ @chapter1 Page #pageref("chapter1") ],
-    "Grammarly", [- Grammar and Style Correction
-    - Clarity and Coherence], [Abstract, Introduction, Conclusion \ \ @chapter1 Page #pageref("chapter1") ],
+    "ChatGPT 4.0",
+    [
+      - Brainstorming Structure
+      - Mindmaps
+      - Rewriting Text
+    ],
+    [All chapters \ See Promt Dictionary \ \ @chapter1 #ref(<chapter1>, form: "page")],
 
-  )
+    "Grammarly",
+    [
+      - Grammar and Style Correction
+      - Clarity and Coherence
+    ],
+    [Abstract, Introduction, Conclusion \ \ @chapter1 #ref(<chapter1>, form: "page") ],
+  ),
 )

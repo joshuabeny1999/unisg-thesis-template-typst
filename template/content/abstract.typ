@@ -1,4 +1,4 @@
-#import "/utils/todo.typ": TODO
+#import "@local/gallus-hsg:1.0.0": *
 
 #TODO[
   1. *paragraph:* What is the motivation of your thesis? Why is it interesting from a scientific point of view? Which main problem do you like to solve?

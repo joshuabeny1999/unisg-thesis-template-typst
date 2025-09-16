@@ -7,7 +7,7 @@
     number-align: center,
   )
 
-  let body-font = "Times new Roman"
+  let body-font = "Libertinus Serif"
 
   set text(
     font: body-font, 

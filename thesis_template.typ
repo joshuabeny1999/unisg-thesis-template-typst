@@ -3,8 +3,8 @@
 #import "/layout/directory_writing_aids.typ": directory_writing_aids as directory_writing_aids_layout
 #import "/layout/abstract.typ": abstract as abstract_layout
 #import "/utils/print_page_break.typ": *
-
-
+#import "/utils/todo.typ": *
+#import "/utils/formfield.typ": *
 
 
 #let thesis(
@@ -21,6 +21,7 @@
   directory_writing_aids: "",
   appendix: "",
   is_print: false,
+  bibliography_raw: bytes(""),
   body,
 ) = {
   assert(language in ("de", "en"), message: "The language supported are only 'de' and 'en'.")
@@ -72,7 +73,7 @@
     },
   )
 
-  let body-font = "Times New Roman"
+  let body-font = "Libertinus Serif"
 
   set text(
     font: body-font,
@@ -206,9 +207,12 @@
     appendix
   }
 
-  pagebreak()
-  let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")
-  bibliography("/thesis.bib", style: "apa", title: bibliographyTitle.at(language))
+  if bibliography_raw != bytes("") {
+    pagebreak()
+    let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")
+    bibliography(bibliography_raw, style: "apa", title: bibliographyTitle.at(language))
+  }
+ 
 
   print_page_break(print: is_print)
 

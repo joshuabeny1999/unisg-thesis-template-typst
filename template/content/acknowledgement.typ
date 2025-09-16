@@ -1,3 +1,5 @@
+#import "@local/gallus-hsg:1.0.0": *
+
 First, I'd like to thank coffee for fueling my brain cells and making this thesis possible.
 
 A big shoutout to my advisor for your patience and for not laughing (too hard) at my wild ideas.

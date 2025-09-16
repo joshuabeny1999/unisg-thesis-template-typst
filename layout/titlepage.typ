@@ -15,7 +15,7 @@
     number-align: center,
   )
 
-  let body-font = "Times New Roman"
+  let body-font = "Libertinus Serif"
 
   set text(
     font: body-font,
@@ -27,7 +27,7 @@
 
 
   // --- Title Page ---
-  align(center, image("/figures/unisg_logo.png", width: 15%))
+  align(center, image("../figures/unisg_logo.png", width: 15%))
   let universityName = (en: "University of St. Gallen", de: "Universität St. Gallen")
   align(center, text(font: body-font, 18pt, weight: 500, upper(universityName.at(language))))
   let universityHeader = (

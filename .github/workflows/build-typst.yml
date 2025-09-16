@@ -15,4 +15,4 @@ jobs:
           lfs: true
 
       - uses: typst-community/setup-typst@v3
-      - run: typst compile thesis.typ thesis.pdf
+      - run: typst compile template/main.typ thesis.pdf

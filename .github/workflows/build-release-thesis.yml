@@ -33,7 +33,7 @@ jobs:
           DEFAULT_BUMP: "patch"
 
       - uses: typst-community/setup-typst@v3
-      - run: typst compile thesis.typ thesis.pdf
+      - run: typst compile template/main.typ thesis.pdf
 
       - name: Create Release
         id: create_release

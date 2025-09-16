@@ -6,7 +6,7 @@ This repository provides a unofficial Typst template for writing your Bachelor's
 --- 
 ## Guidelines 
 
-__Please thorougly read the guidelines and hints on [website](https://www.unisg.ch/fileadmin/user_upload/HSG_ROOT/_Kernauftritt_HSG/Universitaet/Schools/SOM/Faculty/Chair_of_Organization_Studies/Guideline_HSG.pdf)
+Please thorougly read the guidelines and hints on [website](https://www.unisg.ch/fileadmin/user_upload/HSG_ROOT/_Kernauftritt_HSG/Universitaet/Schools/SOM/Faculty/Chair_of_Organization_Studies/Guideline_HSG.pdf)
 
 ---
 
@@ -20,7 +20,7 @@ typst init @preview/gallus-hsg:1.0.0
 ```
 
 ### Set thesis metadata 
-Fill in your thesis details in the [`metadata.typ`](/metadata.typ) file: 
+Fill in your thesis details in the [`metadata.typ`](/template/metadata.typ) file: 
 * The language of the document (en or de)
 * Title
 * Subtitle
@@ -31,9 +31,9 @@ Fill in your thesis details in the [`metadata.typ`](/metadata.typ) file:
 * The submission date
 
 ### Write your thesis
-For the actual content of your thesis, there is a dedicated folder named [`/content`](/content) which includes all the chapters and sections of your thesis.
-You can add or remove chapters as needed (adapt the [`thesis.typ`](/thesis.typ) with the `#include(...)` accordingly).
-If you need to customize the layout of the template, you can do so by modifying the corresponding file in the [`layout`](/layout) directory.
+For the actual content of your thesis, there is a dedicated folder named [`/content`](/template/content) which includes all the chapters and sections of your thesis.
+You can add or remove chapters as needed (adapt the [`main.typ`](/template/main.typ) with the `#include(...)` accordingly).
+If you need to customize the layout of the template, you can do so by modifying the corresponding file in the [`layout`](/template/layout) directory.
 
 
 ---

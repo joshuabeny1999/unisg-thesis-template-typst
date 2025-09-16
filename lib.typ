@@ -1,11 +1,12 @@
-#import "/layout/titlepage.typ": *
-#import "/layout/disclaimer.typ": *
-#import "/layout/directory_writing_aids.typ": directory_writing_aids as directory_writing_aids_layout
-#import "/layout/abstract.typ": abstract as abstract_layout
-#import "/utils/print_page_break.typ": *
-
-
-
+#import "/template/layout/titlepage.typ": *
+#import "/template/layout/disclaimer.typ": *
+#import "/template/layout/directory_writing_aids.typ": directory_writing_aids as directory_writing_aids_layout
+#import "/template/layout/abstract.typ": abstract as abstract_layout
+#import "/template/utils/print_page_break.typ": *
+#import "/template/utils/feedback.typ": *
+#import "/template/utils/formfield.typ": *
+#import "/template/utils/table.typ": *
+#import "/template/utils/todo.typ": *
 
 #let thesis(
   title: "",
@@ -208,7 +209,7 @@
 
   pagebreak()
   let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")
-  bibliography("/thesis.bib", style: "apa", title: bibliographyTitle.at(language))
+  bibliography("/template/thesis.bib", style: "apa", title: bibliographyTitle.at(language))
 
   print_page_break(print: is_print)
 

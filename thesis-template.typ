@@ -22,6 +22,7 @@
   appendix: "",
   is-print: false,
   bibliography-as-bytes: bytes(""),
+  bibliography-style: "apa",
   body,
 ) = {
   assert(language in ("de", "en"), message: "The language supported are only 'de' and 'en'.")
@@ -129,7 +130,7 @@
   set par(leading: 1em)
 
   // --- Citations ---
-  set cite(style: "alphanumeric")
+  set cite(style: bibliography-style)
 
   // --- Figures ---
   show figure: set text(size: 0.85em)
@@ -210,7 +211,7 @@
   if bibliography-as-bytes != bytes("") {
     pagebreak()
     let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")
-    bibliography(bibliography-as-bytes, style: "apa", title: bibliographyTitle.at(language))
+    bibliography(bibliography-as-bytes, style: bibliography-style, title: bibliographyTitle.at(language))
   }
  
 

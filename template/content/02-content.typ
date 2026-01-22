@@ -1,4 +1,4 @@
-#import "@local/gallus-hsg:1.0.0": *
+#import "@local/gallus-hsg:1.0.1": *
 
 = Heading 1
 == Heading 2

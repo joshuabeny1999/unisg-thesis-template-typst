@@ -200,18 +200,34 @@
     acknowledgement
   }
 
+   if bibliography-as-bytes != bytes("") {
+    pagebreak()
+    let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")
+    bibliography(bibliography-as-bytes, style: bibliography-style, title: bibliographyTitle.at(language))
+  }
+  
   // Appendix.
   if appendix != "" {
     pagebreak()
     let appendixTitle = (en: "Appendix", de: "Anhang")
-    heading(numbering: none)[#appendixTitle.at(language)]
-    appendix
-  }
+    
+    // Unnumbered main title on level 1
+    heading(level: 1, numbering: none)[#appendixTitle.at(language)]
 
-  if bibliography-as-bytes != bytes("") {
-    pagebreak()
-    let bibliographyTitle = (en: "References", de: "Literaturverzeichnis")
-    bibliography(bibliography-as-bytes, style: bibliography-style, title: bibliographyTitle.at(language))
+    // Reset heading counter
+    counter(heading).update(0)
+
+    // Shift numbering: Level 2 (==) -> "Appendix A:", Level 3 (===) -> "A.1"
+    set heading(numbering: (..nums) => {
+      let vals = nums.pos()
+      if vals.len() == 2 {
+        appendixTitle.at(language) + " " + numbering("A", vals.last()) + ":"
+      } else if vals.len() > 2 {
+        numbering("A.1", ..vals.slice(1))
+      }
+    })
+
+    appendix
   }
 
   print-pagebreak(print: is-print)

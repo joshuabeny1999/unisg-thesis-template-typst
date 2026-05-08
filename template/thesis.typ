@@ -1,4 +1,4 @@
-#import "@local/gallus-hsg:1.0.1": *
+#import "@local/gallus-hsg:1.1.0": *
 #import "./metadata.typ": *
 
 #set document(title: title, author: author)
